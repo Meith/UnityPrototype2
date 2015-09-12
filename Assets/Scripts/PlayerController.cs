@@ -16,6 +16,13 @@ public class PlayerController : MonoBehaviour
         jumping = false;
     }
 
+	private Animator attack;
+
+	void Start()
+	{
+		attack = GetComponent<Animator> ();
+	}
+
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -31,6 +38,7 @@ public class PlayerController : MonoBehaviour
             transform.position -= transform.forward * speed * Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Space))
+<<<<<<< HEAD
         {
             jumpHeight = transform.position + transform.up * jump * Time.deltaTime;
             jumping = true;
@@ -54,5 +62,21 @@ public class PlayerController : MonoBehaviour
         }
 
        
+=======
+            transform.position += transform.up * jump * Time.deltaTime;
+
+        if(transform.position.y > 0.5f)
+            transform.position -= transform.up * gravity * Time.deltaTime;
+
+        if (transform.position.y < 0.5f)
+            transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+
+		if (Input.GetKey (KeyCode.Z))
+			attack.SetTrigger ("Attack");
+
+		if (Input.GetKey (KeyCode.X))
+			attack.SetTrigger ("Defend");
+
+>>>>>>> Animation
     }
 }
