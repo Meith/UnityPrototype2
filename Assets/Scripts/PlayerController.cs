@@ -8,6 +8,13 @@ public class PlayerController : MonoBehaviour
     public float jump;
     public float gravity;
 
+	private Animator attack;
+
+	void Start()
+	{
+		attack = GetComponent<Animator> ();
+	}
+
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -30,5 +37,12 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.y < 0.5f)
             transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+
+		if (Input.GetKey (KeyCode.Z))
+			attack.SetTrigger ("Attack");
+
+		if (Input.GetKey (KeyCode.X))
+			attack.SetTrigger ("Defend");
+
     }
 }
