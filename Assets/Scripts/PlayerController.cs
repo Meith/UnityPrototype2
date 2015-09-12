@@ -7,6 +7,14 @@ public class PlayerController : MonoBehaviour
     public float theta;
     public float jump;
     public float gravity;
+    private Vector3 jumpHeight;
+    private bool jumping;
+
+    void Start()
+    {
+        jumpHeight = transform.position;
+        jumping = false;
+    }
 
     void Update()
     {
@@ -23,12 +31,28 @@ public class PlayerController : MonoBehaviour
             transform.position -= transform.forward * speed * Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Space))
-            transform.position += transform.up * jump * Time.deltaTime;
+        {
+            jumpHeight = transform.position + transform.up * jump * Time.deltaTime;
+            jumping = true;
+         
+        }
 
-        if(transform.position.y > 0.5f)
-            transform.position -= transform.up * gravity * Time.deltaTime;
+        if (jumping)
+        {
+            transform.position = Vector3.Lerp(transform.position, jumpHeight, 10*Time.deltaTime);
+            if (transform.position.y +1 >= jumpHeight.y)
+                jumping = false;
+        }
+        if (!jumping)
+        {
+  
+            if (transform.position.y > 0.5f)
+                transform.position -= transform.up * gravity * Time.deltaTime;
 
-        if (transform.position.y < 0.5f)
-            transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+            if (transform.position.y < 0.5f)
+                transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+        }
+
+       
     }
 }
