@@ -19,8 +19,6 @@ public class PlayerController : MonoBehaviour
 		attack = GetComponent<Animator> ();
     }
 
-
-
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -39,18 +37,19 @@ public class PlayerController : MonoBehaviour
         {
             jumpHeight = transform.position + transform.up * jump * Time.deltaTime;
             jumping = true;
-         
+
         }
 
         if (jumping)
         {
-            transform.position = Vector3.Lerp(transform.position, jumpHeight, 10*Time.deltaTime);
-            if (transform.position.y +1 >= jumpHeight.y)
+            transform.position = Vector3.Lerp(transform.position, jumpHeight, 10 * Time.deltaTime);
+            if (transform.position.y + 1 >= jumpHeight.y)
                 jumping = false;
         }
+
         if (!jumping)
         {
-  
+
             if (transform.position.y > 0.5f)
                 transform.position -= transform.up * gravity * Time.deltaTime;
 
@@ -58,19 +57,10 @@ public class PlayerController : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
         }
 
-       
-        transform.position += transform.up * jump * Time.deltaTime;
+        if (Input.GetKey(KeyCode.Z))
+            attack.SetTrigger("Attack");
 
-        if(transform.position.y > 0.5f)
-            transform.position -= transform.up * gravity * Time.deltaTime;
-
-        if (transform.position.y < 0.5f)
-            transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-
-		if (Input.GetKey (KeyCode.Z))
-			attack.SetTrigger ("Attack");
-
-		if (Input.GetKey (KeyCode.X))
-			attack.SetTrigger ("Defend");
+        if (Input.GetKey(KeyCode.X))
+            attack.SetTrigger("Defend");
     }
 }
